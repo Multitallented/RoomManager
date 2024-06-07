@@ -1,0 +1,28 @@
+name: 'Docker'
+on:
+  # Trigger the action manually from the UI
+  workflow_dispatch:
+  # Trigger the action on Pull Requests
+  pull_request:
+  # Trigger the action when pushing to certain branches
+  push:
+    branches:
+      - 'main'
+jobs:
+  build_docker_images:
+    # Job name that shows in the GitHub UI
+    name: Build Docker Images
+    # Runner to use
+    runs-on: linux
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag avaaffine/sierrabots:RoomManager --build-arg="DISCORD_KEY=${{ secrets.DISCORD_API_KEY }}"
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: avaaffine
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+    - name: Push the Docker image
+      run: docker push avaaffine/sierrabots:RoomManager
