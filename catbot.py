@@ -1,5 +1,3 @@
-# This example requires the 'message_content' intent.
-
 import discord
 import random
 import asyncio
@@ -67,9 +65,9 @@ def getRandomChannel(channels):
     return None
 
 
-
-discord_key = os.environ.get('DISCORD_API_KEY')
-if discord_key is not None:
-    bot.run(discord_key)
-else:
-    print("DISCORD_API_KEY not set. exiting.")
+def catbot():
+    discord_key = os.environ.get('DISCORD_API_KEY')
+    if discord_key is not None:
+        bot.run(discord_key)
+    else:
+        print("DISCORD_API_KEY not set. exiting.")

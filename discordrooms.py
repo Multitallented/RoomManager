@@ -57,7 +57,7 @@ async def on_voice_state_update(member, before, after):
     global hiddenMemberCount
     everyoneRole = member.guild.default_role
     newHiddenMemberCount = anyChannelHasHiddenMembers(client.get_all_channels(), everyoneRole)
-    
+
     if after.channel and (not before.channel or before.channel != after.channel):
         channel = after.channel.name
         role = discord.utils.get(member.guild.roles, name=channel)
@@ -68,7 +68,7 @@ async def on_voice_state_update(member, before, after):
         role = discord.utils.get(member.guild.roles, name=channel)
         if role:
             await member.remove_roles(role)
-    
+
     isBeforeChannelHidden = False
     if before.channel and not after.channel:
         permissionsBefore = before.channel.permissions_for(everyoneRole)
@@ -112,8 +112,9 @@ async def on_message(message):
             await move.move_to(destination)
         await message.delete()
 
-discord_key = os.environ.get('DISCORD_API_KEY')
-if discord_key is not None:
-    client.run(discord_key)
-else:
-    print("DISCORD_API_KEY not set. exiting.")
+def roombot():
+    discord_key = os.environ.get('DISCORD_API_KEY')
+    if discord_key is not None:
+        client.run(discord_key)
+    else:
+        print("DISCORD_API_KEY not set. exiting.")
